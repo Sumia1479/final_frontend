@@ -17,10 +17,7 @@ function AllEmployeesContainer() {
 
   return (
     <div>
-      <AllEmployeesView
-        allEmployees={allEmployees}
-        deleteEmployee={handleDeleteEmployee}
-      />
+      <AllEmployeesView allEmployees={allEmployees} deleteEmployee={handleDeleteEmployee}/>
     </div>
   );
 }
