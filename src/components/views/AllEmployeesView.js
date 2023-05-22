@@ -6,7 +6,12 @@ const AllEmployeesView = (props) => {
   const { deleteEmployee} = props;
 
   if (!props.allEmployees.length) {
-    return <div>There are no employees.</div>;
+    <div>
+      <div>There are no employees.</div>;
+      <Link to={`/newemployee`}>
+        <button>Add New Employee</button>
+      </Link>
+    </div>
   }
 
   return (
@@ -25,6 +30,9 @@ const AllEmployeesView = (props) => {
         );
 
       })}
+      <Link to={`/newemployee`}>
+        <button>Add New Employee</button>
+      </Link>
     </div>
   );
 };

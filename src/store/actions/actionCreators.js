@@ -66,3 +66,10 @@ export const deleteEmployee = (employeeId) => {
     payload: employeeId,
   };
 };
+
+export const addEmployee = (employee) => {
+  return {
+    type: at.ADD_EMPLOYEE,
+    payload: employee,
+  };
+};
