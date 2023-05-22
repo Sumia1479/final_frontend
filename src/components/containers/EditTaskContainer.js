@@ -42,8 +42,10 @@ class EditTaskContainer extends Component {
     constructor(props){
         super(props);
         this.state = {
-          title: "", 
-          timeslot: "",
+          description: "", 
+          priority: "",
+          isComplete: false,
+          employee:{},
           employeeId: null, 
           redirect: false, 
           redirectId: null,
@@ -56,8 +58,10 @@ class EditTaskContainer extends Component {
         this.props.fetchTask(this.props.match.params.id);
         this.props.fetchEmployees();
         this.setState({
-            title: this.props.task.title, 
-            timeslot: this.props.task.timeslot,
+            description: this.props.task.description, 
+            priority: this.props.task.priority,
+            isComplete: this.props.task.isComplete,
+            employee: this.props.task.employee,
             employeeId: this.props.task.employeeId, 
         });
       }
@@ -74,7 +78,7 @@ class EditTaskContainer extends Component {
       //when the form gets submitted, this is how we can change
       //assigned instructor without having to manually enter in the 
       //instructorId like before
-      if (event.target.value === "staff") {
+      if (event.target.value === "employee") {
         this.setState({employeeId:null});
       } else {
         this.setState({employeeId: event.target.value})
@@ -84,17 +88,33 @@ class EditTaskContainer extends Component {
     handleSubmit = event => {
         event.preventDefault();
         //implementing form validation
-        if (this.state.title === "") {
-          this.setState({error: "Error: title cannot be empty"});
+        if (this.state.description === "") {
+          this.setState({error: "Error: description cannot be empty"});
+          return;
+        }
+        if (this.state.priority === "") {
+          this.setState({error: "Error: priority cannot be empty"});
+          return;
+        }
+        if (this.state.isComplete === "") {
+          this.setState({ error: "Error: isComplete cannot be empty" });
+          return;
+        }
+
+         // Check if isComplete is a valid boolean value
+         if (this.state.isComplete !== "true" && this.state.isComplete !== "false") {
+          this.setState({ error: "Error: isComplete should be true or false only" });
           return;
         }
 
         //get new info for course from form input
         let task = {
-            id: this.props.task.id,
-            title: this.state.title,
-            timeslot: this.state.timeslot,
-            employeeId: this.state.employeeId
+          id: this.props.task.id,
+          description: this.state.description,
+          priority: this.state.priority,
+          isComplete: this.state.isComplete,
+          employee: this.state.employee,
+          employeeId: this.state.employeeId,
         };
         
         this.props.editTask(task);
@@ -125,25 +145,30 @@ class EditTaskContainer extends Component {
         return (
         <div>
         <form style={{textAlign: 'center'}} onSubmit={(e) => this.handleSubmit(e)}>
-            <label style= {{color:'#11153e', fontWeight: 'bold'}}>Title: </label>
-            <input type="text" name="title" value={this.state.title || ''} placeholder={task.title} onChange ={(e) => this.handleChange(e)}/>
+            <label style= {{color:'#11153e', fontWeight: 'bold'}}>Task Description: </label>
+            <input type="text" name="description" value={this.state.description || ''} placeholder={task.description} onChange ={(e) => this.handleChange(e)}/>
             <br/>
 
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Timeslot: </label>
-            <input type="text" name="timeslot" value={this.state.timeslot || ''} placeholder={task.timeslot} onChange={(e) => this.handleChange(e)}/>
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Priority: </label>
+            <input type="text" name="priority" value={this.state.priority || ''} placeholder={task.priority} onChange={(e) => this.handleChange(e)}/>
+            <br/>
+
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>isComplete: </label>
+            <input type="text" name="isComplete" value={this.state.isComplete || ''} placeholder={task.isComplete.toString()} onChange={(e) => this.handleChange(e)}/>
             <br/>
 
             <select onChange={(e) => this.handleSelectChange(e)}>
               {task.employee!==null ?
                 <option value={task.employeeId}>{task.employee.firstname+" (current)"}</option>
-              : <option value="staff">Staff</option>
+              : <option value="employee">Employee</option>
               }
               {otherEmployees.map(employee => {
                 return (
                   <option value={employee.id} key={employee.id}>{employee.firstname}</option>
                 )
               })}
-              {task.employee!==null && <option value="staff">Staff</option>}
+              {task.employee!==null && <option value="employee">Employee</option>}
             </select>
   
             <button type="submit">

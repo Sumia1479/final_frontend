@@ -8,7 +8,7 @@ const EmployeeView = (props) => {
   
   return (
     <div>      
-      <h1>{employee.firstname}</h1>
+      <h1>{employee.firstname + " "+ employee.lastname}</h1>
       <h3>{employee.department}</h3>
       <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
         <div>Assigned tasks:
@@ -16,7 +16,7 @@ const EmployeeView = (props) => {
           return (
             <div key={task.id}>
             <Link to={`/task/${task.id}`}>
-              <h4>{task.title}</h4>
+              <h4>{task.description}</h4>
             </Link>
             <button onClick={() => editTask({id:task.id, employeeId: null})}>x</button>
             </div>
@@ -27,7 +27,7 @@ const EmployeeView = (props) => {
           return (
             <div key={task.id}>
             <Link to={`/task/${task.id}`}>
-              <h4>{task.title}</h4>
+              <h4>{task.description}</h4>
             </Link>
             <button onClick={() => editTask({id:task.id, employeeId: employee.id})}>+</button>
             </div>
