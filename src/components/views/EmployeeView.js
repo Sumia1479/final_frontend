@@ -36,6 +36,13 @@ const EmployeeView = (props) => {
 
       </div>
 
+      <div>
+        <div style={{ marginTop: '20px' }}></div>
+        <Link to={`/editemployee/${employee.id}`}>Edit Employee information</Link>
+          <br/>
+        <Link to={`/employees`}>View all Employees</Link>
+      </div>
+
   
     </div>
   );

@@ -104,3 +104,13 @@ export const addEmployeeThunk = (employee) => async (dispatch) => {
     console.error(err);
   }
 };
+
+export const editEmployeeThunk = employee => async dispatch => {
+  try {
+    let res = await axios.put(`${path}/employees/${employee.id}`, employee);
+    //res.data is the updated e object
+    dispatch(ac.editEmployee(res.data));
+  } catch(err) {
+    console.error(err);
+  }
+};

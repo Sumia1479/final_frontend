@@ -73,3 +73,11 @@ export const addEmployee = (employee) => {
     payload: employee,
   };
 };
+
+
+export const editEmployee = (employee) => {
+  return {
+    type: at.EDIT_EMPLOYEE,
+    payload: employee,
+  };
+};

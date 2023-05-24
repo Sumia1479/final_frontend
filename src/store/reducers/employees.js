@@ -9,6 +9,12 @@ const allEmployees = (state = [], action) => {
         return state.filter(employee => employee.id!==action.payload);
     case at.ADD_EMPLOYEE:
       return [...state, action.payload]
+    case at.EDIT_EMPLOYEE:
+      return state.map(employee => { 
+        return (
+          employee.id===action.payload.id ? action.payload : employee
+        );
+      });
     default:
       return state;
   }
