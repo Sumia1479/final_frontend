@@ -32,7 +32,6 @@ const App = () => {
         <Route exact path="/edittask/:id" component={EditTaskContainer} />
         <Route exact path="/newemployee" component={NewEmployeeContainer} />
         <Route exact path="/editemployee/:id" component={EditEmployeeContainer} />
-
       </Switch>        
     </div>
   );

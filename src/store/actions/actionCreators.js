@@ -74,7 +74,6 @@ export const addEmployee = (employee) => {
   };
 };
 
-
 export const editEmployee = (employee) => {
   return {
     type: at.EDIT_EMPLOYEE,
