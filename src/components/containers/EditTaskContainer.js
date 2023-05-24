@@ -66,7 +66,18 @@ class EditTaskContainer extends Component {
         });
       }
 
-    handleChange = event => {
+      // so the changes appear on the task page after it redirects to it, i.e., the descritption updates
+      componentDidUpdate(prevProps) {
+        // Check if the task data has been updated
+        if (prevProps.task !== this.props.task) {
+          const { description, priority, isComplete, employee, employeeId } = this.props.task;
+          this.setState({ description, priority, isComplete, employee, employeeId });
+        }
+      }
+      
+        
+
+    handleChange =  event => {
       this.setState({
         [event.target.name]: event.target.value
       });
@@ -85,7 +96,7 @@ class EditTaskContainer extends Component {
       }
     }
 
-    handleSubmit = event => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         //implementing form validation
         if (this.state.description === "") {
@@ -117,7 +128,9 @@ class EditTaskContainer extends Component {
           employeeId: this.state.employeeId,
         };
         
-        this.props.editTask(task);
+        await this.props.editTask(task);
+        // await this.props.fetchTask(task.id);
+
 
         this.setState({
           redirect: true, 

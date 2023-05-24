@@ -32,15 +32,6 @@ class EditEmployeeContainer extends Component {
       });
     }
 
-
-    componentDidUpdate(props) {
-      if (props.employee !== this.props.employee) {
-        // Fetch the updated employee data
-        this.props.fetchEmployee(this.props.match.params.id);
-      }
-    }
-    
-
     handleChange = event => {
       this.setState({
         [event.target.name]: event.target.value
@@ -57,7 +48,7 @@ class EditEmployeeContainer extends Component {
       
     }
 
-    handleSubmit = event => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         //implementing form validation
         if (this.state.firstname === "") {
@@ -82,9 +73,8 @@ class EditEmployeeContainer extends Component {
           employeeId: this.state.employeeId
         };
 
-
-        this.props.editTask({ id: employee.employeeId, employeeId: employee.id });
-        this.props.editEmployee(employee);
+        await this.props.editTask({ id: employee.employeeId, employeeId: employee.id });
+        await this.props.editEmployee(employee);
   
 
         this.setState({
